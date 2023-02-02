@@ -1,0 +1,13 @@
+---
+
+- name: Install and configure DHCP and DNS
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: DHCP
+      include_role:
+        name: dhcp
+    - name: DNS
+      include_role:
+        name: DNS
+    

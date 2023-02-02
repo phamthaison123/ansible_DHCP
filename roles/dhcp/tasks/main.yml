@@ -1,0 +1,23 @@
+---
+
+- name: Install DHCP server
+  become: yes
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: isc-dhcp-server
+    state: present
+  tags: dhcp
+
+- name: Install DHCP server
+  become: yes
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: dhcp
+    state: present
+  tags: dhcp
+- name: Configure DHCP server
+  become: yes
+  template:
+    src: dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+  tags: dhcp

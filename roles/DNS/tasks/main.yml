@@ -1,0 +1,33 @@
+---
+
+- name: Install DNS server
+  become: yes
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: bind9
+    state: present
+  tags: dns
+
+- name: Install DNS server
+  become: yes
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: bind
+    state: present
+  tags: dns
+
+- name: Configure DNS server for Ubuntu
+  become: yes
+  when: ansible_os_family == 'Debian'
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  tags: dns
+
+- name: Configure DNS server for CentOS
+  become: yes
+  when: ansible_os_family == 'RedHat'
+  template:
+    src: resolv.j2
+    dest: /etc/resolv.conf
+  tags: dns
